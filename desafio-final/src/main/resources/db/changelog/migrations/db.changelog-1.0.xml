@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+        <changeSet id="1" author="rodrigo.fischer">
+            <sql dbms="postgresql">
+                CREATE TABLE USERS (
+                     user_id         SERIAL NOT NULL PRIMARY KEY,
+                     name            VARCHAR(255) NOT NULL,
+                     username        VARCHAR(255) NOT NULL UNIQUE,
+                     phone           CHAR(11),
+                     email           VARCHAR(255) NOT NULL UNIQUE,
+                     password        VARCHAR(512) NOT NULL,
+                     description     VARCHAR(255) NOT NULL,
+                     profile_link    VARCHAR(512) NOT NULL,
+                     deleted         BOOLEAN NOT NULL,
+                     created_at      DATE NOT NULL,
+                     updated_at      DATE
+                );
+            </sql>
+        </changeSet>
+
+    <changeSet id="2" author="rodrigo.fischer">
+        <sql dbms="postgresql">
+            CREATE TABLE POSTS (
+                 post_id         SERIAL NOT NULL PRIMARY KEY,
+                 user_id         INTEGER NOT NULL,
+                 title           VARCHAR(50) NOT NULL,
+                 description     VARCHAR(200) NOT NULL,
+                 photo_link      VARCHAR(512),
+                 video_link      VARCHAR(512),
+                 private         BOOLEAN NOT NULL,
+                 created_at      DATE NOT NULL,
+                 updated_at      DATE,
+                 FOREIGN KEY (user_id) REFERENCES USERS(user_id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="3" author="rodrigo.fischer">
+        <sql dbms="postgresql">
+            INSERT INTO USERS (name, username, phone, email, password, description, profile_link, deleted, created_at, updated_at)
+            VALUES ('John Doe', 'johndoe', '12345678901', 'johndoe@example.com', 'password', 'Java Spring Developer for 5 years on Teach 3035', 'http://example.com/profile.jpg', FALSE, CURRENT_DATE, CURRENT_DATE)
+        </sql>
+    </changeSet>
+
+    <changeSet id="4" author="rodrigo.fischer">
+        <sql dbms="postgresql">
+            INSERT INTO POSTS (user_id, title, description, photo_link, video_link, private, created_at, updated_at)
+            VALUES
+                (1, 'Post Title 1', 'This is the description for the first post.', 'http://example.com/photo1.jpg', 'http://example.com/video1.mp4', FALSE, CURRENT_DATE, CURRENT_DATE),
+                (1, 'Post Title 2', 'This is the description for the second post.', 'http://example.com/photo2.jpg', 'http://example.com/video2.mp4', FALSE, CURRENT_DATE, CURRENT_DATE),
+                (1, 'Post Title 3', 'This is the description for the third post.', 'http://example.com/photo3.jpg', 'http://example.com/video3.mp4', FALSE, CURRENT_DATE, CURRENT_DATE);
+
+        </sql>
+    </changeSet>
+</databaseChangeLog>
