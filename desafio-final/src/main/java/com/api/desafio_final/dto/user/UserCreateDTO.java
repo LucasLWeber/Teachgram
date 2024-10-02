@@ -39,6 +39,10 @@ public class UserCreateDTO {
 
     @NotNull
     @NotEmpty
+    private String description;
+
+    @NotNull
+    @NotEmpty
     private String profileLink;
 
     @NotNull

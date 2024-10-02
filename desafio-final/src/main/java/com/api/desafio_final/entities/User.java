@@ -32,6 +32,8 @@ public class User {
 
     private String password;
 
+    private String description;
+
     @Column(name = "profile_link")
     private String profileLink;
 

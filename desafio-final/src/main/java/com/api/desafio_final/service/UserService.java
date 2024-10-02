@@ -8,8 +8,8 @@ import com.api.desafio_final.exceptions.CustomException;
 import com.api.desafio_final.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -30,15 +30,14 @@ public class UserService {
 
     public UserDTO listById(Integer userId) throws Exception{
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new CustomException("Usuário não encontado"));
-
+                .orElseThrow(() -> new CustomException("Usuário não encontado", HttpStatus.NOT_FOUND));
         return objectMapper.convertValue(user, UserDTO.class);
     }
 
     public UserDTO login(LoginCreateDTO login) throws Exception{
-        User user = userRepository.findByEmail(login.getEmail()).orElseThrow(() -> new CustomException("Usuário não encontrado"));
+        User user = userRepository.findByEmail(login.getEmail()).orElseThrow(() -> new CustomException("Usuário não encontrado", HttpStatus.NOT_FOUND));
         boolean isAuth = login.getPassword().equals(user.getPassword());
-        if (!isAuth) throw new CustomException("Senha incorreta");
+        if (!isAuth) throw new CustomException("Senha incorreta", HttpStatus.BAD_REQUEST);
         return listById(user.getUserId());
     }
 
@@ -51,7 +50,7 @@ public class UserService {
     }
 
     public UserDTO update(UserCreateDTO userCreateDTO, Integer userId) throws Exception{
-        User userFromBD = userRepository.findById(userId).orElseThrow(() -> new CustomException("Usuário não encontrado"));
+        User userFromBD = userRepository.findById(userId).orElseThrow(() -> new CustomException("Usuário não encontrado", HttpStatus.NOT_FOUND));
 
         userFromBD.setName(userCreateDTO.getName());
         userFromBD.setUserName(userCreateDTO.getUserName());
@@ -67,7 +66,13 @@ public class UserService {
     }
 
     public void delete(Integer userId) throws Exception{
-        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException("Usuário não encontrado"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException("Usuário não encontrado", HttpStatus.NOT_FOUND));
         userRepository.delete(user);
+    }
+
+    protected User findUserById(Integer userId) throws Exception{
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException("Usuário não encontado", HttpStatus.NOT_FOUND));
+        return user;
     }
 }
