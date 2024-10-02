@@ -1,7 +1,6 @@
 package com.api.desafio_final.dto.login;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -14,14 +13,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginCreateDTO {
-    @NotNull
-    @NotEmpty
-    @NotBlank
+    @NotNull(message = "Não pode ser nulo")
+    @NotEmpty(message = "Não pode ser em branco")
     @Email
     private String email;
 
-    @NotNull
-    @NotEmpty
-    @NotBlank
+    @NotNull(message = "Não pode ser nulo")
+    @NotEmpty(message = "Não pode ser em branco")
     private String password;
 }

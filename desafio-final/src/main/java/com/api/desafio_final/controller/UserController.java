@@ -4,6 +4,7 @@ import com.api.desafio_final.dto.login.LoginCreateDTO;
 import com.api.desafio_final.dto.user.UserCreateDTO;
 import com.api.desafio_final.dto.user.UserDTO;
 import com.api.desafio_final.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,18 +29,13 @@ public class UserController {
         return new ResponseEntity<>(userService.listById(userId), HttpStatus.OK);
     }
 
-    @GetMapping("/login")
-    public ResponseEntity<UserDTO> login(@RequestBody LoginCreateDTO credentials) throws Exception{
-        return new ResponseEntity<>(userService.login(credentials), HttpStatus.OK);
-    }
-
     @PostMapping
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserCreateDTO userCreateDTO) {
+    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserCreateDTO userCreateDTO) throws Exception{
         return new ResponseEntity<>(userService.create(userCreateDTO), HttpStatus.CREATED);
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Integer userId, @RequestBody UserDTO userDTO) throws Exception{
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Integer userId, @Valid @RequestBody UserDTO userDTO) throws Exception{
         return new ResponseEntity<>(userService.update(userDTO, userId), HttpStatus.OK);
     }
 

@@ -15,8 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -58,6 +56,26 @@ public class PostService {
         post.setUser(user);
         post.setCreatedAt(LocalDateTime.now());
         return postRepository.save(post);
+    }
+
+
+    public Post update(Integer postId, Integer userId, PostCreateDTO postCreateDTO) throws Exception {
+        User user = userService.findUserById(userId);
+        Post post = postRepository.findById(postId).orElseThrow(() -> new CustomException("Post não encontrado.", HttpStatus.NOT_FOUND));
+
+        if (user.getUserId() != post.getUser().getUserId()) throw new CustomException("Você não tem permissão para acessar este recurso.", HttpStatus.FORBIDDEN);
+
+
+        post.setTitle(postCreateDTO.getTitle());
+        post.setDescription(postCreateDTO.getDescription());
+        post.setPhotoLink(postCreateDTO.getPhotoLink());
+        post.setVideoLink(postCreateDTO.getVideoLink());
+        post.setPrivate(postCreateDTO.isPrivate());
+        post.setUpdatedAt(LocalDateTime.now());
+
+        postRepository.save(post);
+
+        return post;
     }
 
     public void delete(Integer postId, Integer userId) throws Exception {

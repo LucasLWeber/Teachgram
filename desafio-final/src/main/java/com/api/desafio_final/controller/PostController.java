@@ -36,6 +36,11 @@ public class PostController {
         return new ResponseEntity<>(postService.create(userId, post), HttpStatus.CREATED);
     }
 
+    @PutMapping("/{postId}/user/{userId}")
+    public ResponseEntity<Post> update(@PathVariable Integer postId, @PathVariable Integer userId, @Valid @RequestBody PostCreateDTO post) throws Exception {
+        return new ResponseEntity<>(postService.update(postId, userId, post), HttpStatus.OK);
+    }
+
     @DeleteMapping("/{postId}/user/{userId}")
     public ResponseEntity<Void> delete(@PathVariable Integer postId, @PathVariable Integer userId) throws Exception {
         postService.delete(postId, userId);
