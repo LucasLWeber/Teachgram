@@ -27,13 +27,11 @@ public class PostCreateDTO {
     @Schema(name = "photoLink", description = "Insira a url para imagem para seu Post")
     private String photoLink;
 
-    @NotEmpty(message = "Não pode ser em branco")
     @Schema(name = "videoLink", description = "Insira a url para o vídeo para seu Post")
     private String videoLink;
 
 
     @NotNull(message = "Não pode ser nulo")
-    @NotEmpty(message = "Não pode ser em branco")
     @Schema(name = "isPrivate", description = "Insira true/false indicando se o Post é privado")
-    private boolean isPrivate;
+    private Boolean isPrivate;
 }

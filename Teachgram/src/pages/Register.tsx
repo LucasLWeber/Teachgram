@@ -16,7 +16,7 @@ export function Register(){
             <img
                 className="lg:w-1/2 hidden lg:block"
                 src={welcome} 
-                alt="Duas moças tirando uma selfie" 
+                alt="Duas moças tirando uma selfie"  
             />
         </section>
     );

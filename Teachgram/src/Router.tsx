@@ -1,19 +1,37 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
-import { Loading } from "./pages/Loading";
 import { Feed } from "./pages/Feed";
+import { TokenVerify } from "./pages/layouts/TokenVerify";
+import { PublicRoute } from "./pages/layouts/PublicRouter";
+import { PrivateRoute } from "./pages/layouts/PrivateRouter";
+import { UserProvider } from "./context/UserContext";
+import { Profile } from "./pages/Profile";
+import { PostProvider } from "./context/PostsContext";
+import { Settings } from "./pages/Settings";
 
 export function Router(){
     return(
         <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/cadastro" element={<Register />} />
-                <Route path="/carregando" element={<Loading />} />
-                <Route path="/feed" element={<Feed />} />
-            </Routes>
-        </BrowserRouter>
+			<UserProvider>
+				<PostProvider >
+					<Routes>
+						<Route path="/" element={<TokenVerify />} />
 
+						<Route element={<PublicRoute />}>
+							<Route path="/login" element={<Login />} />
+							<Route path="/cadastro" element={<Register />} />
+						</Route>
+					
+					
+						<Route element={<PrivateRoute />}>
+							<Route path="/feed" element={<Feed />} />
+							<Route path="/perfil" element={<Profile />} />
+							<Route path="/configuracoes" element={<Settings />} />
+						</Route>
+					</Routes>
+				</PostProvider>
+			</UserProvider>
+        </BrowserRouter>
     );
 }

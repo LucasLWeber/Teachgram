@@ -1,6 +1,5 @@
 package com.api.desafio_final.dto.post;
 
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,4 +20,6 @@ public class PostDTO {
     private Boolean isPrivate;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private String username;
+    private String profileLink;
 }

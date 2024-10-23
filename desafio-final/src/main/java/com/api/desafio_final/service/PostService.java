@@ -32,7 +32,18 @@ public class PostService {
 
         if (posts.isEmpty()) throw new CustomException("Não há posts na rede social.", HttpStatus.NOT_FOUND);
 
-        Page<PostDTO> postsDTO = posts.map(post -> objectMapper.convertValue(post, PostDTO.class));
+        Page<PostDTO> postsDTO = posts.map(post -> {
+            PostDTO postDTO = objectMapper.convertValue(post, PostDTO.class);
+
+            User user = post.getUser();
+
+            if (user != null) {
+                postDTO.setUsername(user.getUsername().charAt(0) != '@' ? '@' + user.getUsername() : user.getUsername());
+                postDTO.setProfileLink(user.getProfileLink());
+            }
+
+            return postDTO;
+        });
 
         return new PageDTO<>(
                 postsDTO.getTotalElements(),
@@ -58,7 +69,6 @@ public class PostService {
         return postRepository.save(post);
     }
 
-
     public Post update(Integer postId, Integer userId, PostCreateDTO postCreateDTO) throws Exception {
         User user = userService.findUserById(userId);
         Post post = postRepository.findById(postId).orElseThrow(() -> new CustomException("Post não encontrado.", HttpStatus.NOT_FOUND));
@@ -70,7 +80,7 @@ public class PostService {
         post.setDescription(postCreateDTO.getDescription());
         post.setPhotoLink(postCreateDTO.getPhotoLink());
         post.setVideoLink(postCreateDTO.getVideoLink());
-        post.setPrivate(postCreateDTO.isPrivate());
+        post.setPrivate(postCreateDTO.getIsPrivate());
         post.setUpdatedAt(LocalDateTime.now());
 
         postRepository.save(post);

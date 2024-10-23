@@ -1,8 +1,10 @@
+import { LoginResponse } from "./interfaces";
+
 export function createdAtFormater(createdAt: string): string {
 	const createdDate = new Date(createdAt);
 	const now = new Date();
 	const diffInMs = now.getTime() - createdDate.getTime();
-	const diffInMinutes = Math.floor(diffInMs / (1000 * 60)); // diferença em minutos
+	const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
 
 	if (diffInMinutes < 1) {
 		return 'agora';
@@ -22,4 +24,17 @@ export function createdAtFormater(createdAt: string): string {
 	}
 
 	return `há ${diffInDays} dias`;
+}
+
+export function save(loginResponse: LoginResponse){
+	localStorage.setItem("user/auth", JSON.stringify(loginResponse));
+}
+
+export function getUser(): LoginResponse | null {
+    const userData = localStorage.getItem("user/auth");
+    return userData ? JSON.parse(userData) : null;
+}
+
+export function remove() {
+	localStorage.removeItem("user/auth");
 }

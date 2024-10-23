@@ -4,6 +4,8 @@ import { ForwardedInput } from "./utils/Input";
 import { Label } from "./utils/Label";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import useRegister from "../../hooks/RegisterHook";
+import { Loading } from "../../pages/Loading";
 
 
 interface FormInputs{
@@ -22,20 +24,29 @@ export function RegisterForm(){
     const [buttonText, setButtonText] = useState("Próximo");
     const [title, setTitle] = useState("Crie sua conta");
 
-    const onSubmit: SubmitHandler<FormInputs> = (data) => {
+	const { fetchRegister, loading } = useRegister();
+
+    const onSubmit: SubmitHandler<FormInputs> = async (data) => {
         if (!send) {
             setSend(true);
             setTitle("Insira o link da sua foto de perfil");
             setButtonText("Salvar");
         } else {
-            console.log(data);
-        }
+            await fetchRegister({
+                name: data.nome,
+                username: data.username,
+                email: data.email,
+                password: data.senha,
+                phone: data.celular,
+                description: data.descricao,
+                profileLink: data.link,
+                deleted: false,
+            });
+        };
     }
 
-
     return(
-        <div className="pl-[45px] flex flex-col items-start">
-            
+        <div className="pl-[45px] flex flex-col items-start h-screen max-h-screen overflow-y-auto">
             <h1 className="font-semibold text-xl mb-[30px]">{title}</h1>
             <form className="flex flex-col gap-y-6" onSubmit={handleSubmit(onSubmit)}>
                 {!send && (
@@ -171,10 +182,7 @@ export function RegisterForm(){
                     </div>
                 )}
 
-                <Button 
-                    type="submit"
-                    title={buttonText}
-                />
+				<Button type="submit" title={loading ? "Enviando..." : buttonText} disabled={loading}/>
             </form>
 
             <span className="text-base text-custom-black self-center mt-[20px]">Já possui conta? 

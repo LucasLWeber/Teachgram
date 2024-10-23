@@ -3,6 +3,7 @@ import logo from "/assets/logo.svg"
 import welcome from "/assets/welcome.png"
 
 export function Login(){
+	
     return(
         <section className="flex w-full">
             <div 
@@ -13,8 +14,7 @@ export function Login(){
                 <img src={logo} alt="Teachgram" className="h-[50px]"/>
                 <LoginForm />
             </div>
-            <img
-                className="lg:w-1/2 hidden lg:block"
+            <img className="lg:w-1/2 hidden lg:block lg:h-screen object-cover"
                 src={welcome} 
                 alt="Duas moças tirando uma selfie" 
             />

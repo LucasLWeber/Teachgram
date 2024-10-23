@@ -6,7 +6,10 @@ import { ButtonSecondary } from "./utils/ButtonSecondary";
 import GoogleIcon from "/assets/google.png";
 import AppleIcon from "/assets/apple.png";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useLogin from "../../hooks/LoginHook";
+import { save } from "../../utils/functions";
+import { useEffect } from "react";
 
 interface FormInputs{
     email: string;
@@ -14,9 +17,24 @@ interface FormInputs{
 }
 
 export function LoginForm(){
-
+	const { data, error, fecthLogin } = useLogin();
     const { register, handleSubmit, formState: { errors }} = useForm<FormInputs>();
-    const onSubmit: SubmitHandler<FormInputs> = (data) => console.log(data)
+	const navigate = useNavigate();
+
+    const onSubmit: SubmitHandler<FormInputs> = async (formData) => {
+		try {
+            await fecthLogin({ email: formData.email, password: formData.senha });
+        } catch (e) {
+            console.error("Erro ao realizar login", e);
+        };
+	}
+
+	useEffect(() => {
+		if (data){
+			save(data);
+			navigate("/feed");
+		}
+	}, [data, navigate]);
 
     return(
         <div className="pl-[45px]">
@@ -61,11 +79,17 @@ export function LoginForm(){
                                 {errors.senha.message}
                         </p>
                     }
+					{error && 
+                        <p className="text-custom-red text-base text-end font-semibold mt-1">
+                            <span className="inline-block h-2 w-2 mr-2 bg-custom-red rounded-full"></span>
+                                {error}
+                        </p>
+                    }
                 </div>
-                <Button 
-                    type="submit"
-                    title="Entrar"
-                />
+				<Button 
+					type="submit" 
+					title="Entrar"
+				/>
                 <span className="text-base text-custom-black self-center">Não possui conta? 
                     <Link to="/cadastro" className="ml-1 font-semibold text-custom-red underline">
                         Cadastre-se

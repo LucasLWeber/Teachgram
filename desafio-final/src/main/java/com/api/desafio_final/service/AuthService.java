@@ -38,7 +38,7 @@ public class AuthService {
 
             return new UserLoggedDTO(validatedUser.getUserId(), token);
         } catch (Exception e) {
-            throw new CustomException("Email e/ou senha inválidos", HttpStatus.BAD_REQUEST);
+            throw new CustomException("Senha incorreta", HttpStatus.BAD_REQUEST);
         }
     }
 }

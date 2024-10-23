@@ -8,6 +8,7 @@ import com.api.desafio_final.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
     private final ObjectMapper objectMapper;
+    private final PasswordEncoder passwordEncoder;
 
     public List<UserDTO> listAll(){
         List<User> users =  userRepository.findAll();
@@ -37,8 +39,8 @@ public class UserService {
         if (userRepository.findByUsername(userCreateDTO.getUsername()).isPresent()) throw new CustomException("Nome de usuário já cadastrado", HttpStatus.BAD_REQUEST);
         if (userRepository.findByEmail(userCreateDTO.getEmail()).isPresent()) throw new CustomException("E-mail já cadastrado", HttpStatus.BAD_REQUEST);
 
-
         User user = objectMapper.convertValue(userCreateDTO, User.class);
+        user.setPassword(passwordEncoder.encode(userCreateDTO.getPassword()));
         user.setCreatedAt(LocalDate.now());
         user.setUpdatedAt(LocalDate.now());
         userRepository.save(user);
