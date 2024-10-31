@@ -3,6 +3,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { PostAction } from "./PostAction";
 import { Publications } from "../../../utils/interfaces";
+import { useUserContext } from "../../../context/UserContext";
 
 interface PublicationProps {
 	fetchPosts: () => void;
@@ -11,6 +12,7 @@ interface PublicationProps {
 
 export function Publication( {fetchPosts, publications}: PublicationProps){
 	const [activePostId, setActivePostId] = useState<number | null>(null);
+	const { user } = useUserContext();
 
 	useEffect(() => {
 		fetchPosts();
@@ -32,12 +34,14 @@ export function Publication( {fetchPosts, publications}: PublicationProps){
 							</span>
 						</div>
 					</div>
-					<div className="flex space-x-4">
-						{activePostId === post.postId && <PostAction postId={post.postId} />}
-						<button onClick={() => setActivePostId(activePostId === post.postId ? null : post.postId)}>
-							<img src="/assets/more.svg" alt="" />
-						</button>
-					</div>
+					{(user?.username === post.username.slice(0)) &&
+						<div className="flex space-x-4">
+							{activePostId === post.postId && <PostAction postId={post.postId} />}
+							<button onClick={() => setActivePostId(activePostId === post.postId ? null : post.postId)}>
+								<img src="/assets/more.svg" alt="" />
+							</button>
+						</div>
+					}
 				</div>
 				<p className="text-btn-feed-gray text-xl">{post.description}</p>
 				<img src={post.photoLink} alt={post.title} className="mx-auto h-auto max-w-[300px]"/>

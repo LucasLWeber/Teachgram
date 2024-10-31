@@ -1,13 +1,23 @@
-import { useEffect } from "react";
-import usePosts from "../../../hooks/PostsHook";
+import { useEffect, useState } from "react";
+import { usePostContext } from "../../../context/PostsContext";
+import { Post, Publication } from "../../../utils/interfaces";
 
-export function Posts(){
+interface PostsProps {
+	username: string | null
+}
 
-	const { fetchPosts, posts } = usePosts();
+export function Posts({ username }: PostsProps){
+
+	const { fetchPosts, publications } = usePostContext();
+	const [posts, setPosts] = useState<Post[]>([]);
 
 	useEffect(() => {
-		fetchPosts();
-	  }, []);
+		const loadPosts = async () => {
+			const userPosts = publications?.content.filter((p: Publication) => p.username === username) || [];
+			setPosts(userPosts);
+		}
+		loadPosts();
+	}, [fetchPosts, username]);
 
 	return(
 		<div className="flex flex-col gap-y-4">

@@ -1,22 +1,18 @@
 import { Header } from "./utils/Header";
-import { useUserContext } from "../../context/UserContext";
-import { Loading } from "../../pages/Loading";
 import { Posts } from "./utils/Posts";
 import SideBar from "../Sidebar";
+import { User } from "../../utils/interfaces";
 
-
-export function PerfilContent(){
-
-	const { user } = useUserContext();
-
-	if (!user) return <Loading />
- 
+interface PerfilContentProps {
+	user: User | null
+}
+export function PerfilContent({ user }: PerfilContentProps){
     return(
         <main className="w-10/12 mx-auto mt-16 flex justify-between">
-			<SideBar  user={user}/>
+			<SideBar/>
 			<div className="w-3/4 flex flex-col gap-4">
-				<Header />
-				<Posts />
+				<Header user={user}/>
+				<Posts username={ user ? user.username : null  }/>
 			</div>
         </main>
     );

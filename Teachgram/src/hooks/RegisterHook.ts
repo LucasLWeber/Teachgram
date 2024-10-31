@@ -27,6 +27,8 @@ function useRegister(){
 				})
 			});
 
+			console.log(await response.json());
+
 			if (response.ok) navigate('/login');
 		} catch(e) {
 			setError('Ocorreu um erro durante a requisição');

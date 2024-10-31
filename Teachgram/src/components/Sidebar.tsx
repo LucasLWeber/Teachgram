@@ -7,16 +7,14 @@ import { Button } from "./perfil/utils/Button";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import ImageInput from "./newPost/ImageInput";
-import { User } from "../utils/interfaces";
+import { Friends } from "./friends/Friends";
+import { useUserContext } from "../context/UserContext";
 
-interface SideBarProps {
-  user: User | null;
-}
 
-export default function SideBar({ user }: SideBarProps) {
+export default function SideBar() {
   const [isModalToCreatePostOpen, setIsModalToCreatePostOpen] = useState(false);
-
-  if (!user) return null;
+  const [isModalToViewFriends, setIsModalToViewFriends] = useState(false);
+  const { user }  = useUserContext();
 
   return (
     <div className="flex flex-col gap-8 w-1/4">
@@ -26,13 +24,13 @@ export default function SideBar({ user }: SideBarProps) {
         <Link to="/feed" className="block w-full">
           <Button icon={home} title="Feed"  />
         </Link>
-        
-        <div className="w-full">
-          <Button icon={people} title="Amigos"  />
-        </div>
+
+		<div className="w-full">
+			<Button icon={people} title="Amigos" onClick={() => setIsModalToViewFriends(true)}/>
+		</div>
         
         <Link to="/perfil" className="block w-full">
-          <Button isRounded={true} icon={user.profileLink} title="Perfil"  />
+          <Button isRounded={true} icon={user ? user.profileLink : ""} title="Perfil"  />
         </Link>
         
         <Link to="/configuracoes" className="block w-full">
@@ -40,8 +38,14 @@ export default function SideBar({ user }: SideBarProps) {
         </Link>
         
         <div className="w-full">
-          <Button icon={add} title="Criar"  onClick={() => setIsModalToCreatePostOpen(true)} />
+          <Button icon={add} title="Criar" onClick={() => setIsModalToCreatePostOpen(true)} />
         </div>
+
+        {isModalToViewFriends && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <Friends onClose={() => setIsModalToViewFriends(false)} />
+          </div>
+        )}
 
         {isModalToCreatePostOpen && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">

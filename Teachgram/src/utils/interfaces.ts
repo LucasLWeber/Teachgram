@@ -51,7 +51,7 @@ export interface Publication {
 	username: string;
 	profileLink: string;
 }
-
+ 
 export interface Publications{
 	totalElements: number;
 	totalPages: number;

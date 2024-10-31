@@ -9,6 +9,8 @@ import { UserProvider } from "./context/UserContext";
 import { Profile } from "./pages/Profile";
 import { PostProvider } from "./context/PostsContext";
 import { Settings } from "./pages/Settings";
+import { ProfileSettings } from "./components/settings/ProfileSettings";
+import { AccountSettings } from "./components/settings/AccountSettings";
 
 export function Router(){
     return(
@@ -27,7 +29,11 @@ export function Router(){
 						<Route element={<PrivateRoute />}>
 							<Route path="/feed" element={<Feed />} />
 							<Route path="/perfil" element={<Profile />} />
-							<Route path="/configuracoes" element={<Settings />} />
+							<Route path="/perfil/:id" element={<Profile />} />
+							<Route path="/configuracoes" element={<Settings />} >
+								<Route path="perfil" element={<ProfileSettings />} />
+								<Route path="conta" element={<AccountSettings />} />
+							</Route>
 						</Route>
 					</Routes>
 				</PostProvider>
