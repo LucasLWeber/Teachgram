@@ -50,11 +50,13 @@ public class UserService {
     public UserDTO update(UserCreateDTO userCreateDTO, Integer userId) throws Exception{
         User userFromBD = userRepository.findById(userId).orElseThrow(() -> new CustomException("Usuário não encontrado", HttpStatus.NOT_FOUND));
 
+        String encodedPassword = passwordEncoder.encode(userCreateDTO.getPassword());
+
         userFromBD.setName(userCreateDTO.getName());
         userFromBD.setUsername(userCreateDTO.getUsername());
         userFromBD.setPhone(userCreateDTO.getPhone());
         userFromBD.setEmail(userCreateDTO.getEmail());
-        userFromBD.setPassword(userCreateDTO.getPassword());
+        userFromBD.setPassword(encodedPassword);
         userFromBD.setProfileLink(userCreateDTO.getProfileLink());
         userFromBD.setDeleted(userCreateDTO.isDeleted());
         userFromBD.setUpdatedAt(LocalDate.now());
