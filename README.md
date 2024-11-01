@@ -17,3 +17,10 @@ Crie o arquivo .env conforme o .env.example, se preferir apenas renomeie o arqui
 Na sequência execute ```npm run dev```
 
 Obs.: É importante que o back-end já esteja sendo executado
+
+---
+
+## Usuário Default em PRD (Banco Render)
+
+email: alice.johnson@example.com
+senha: @SuperSenha123
