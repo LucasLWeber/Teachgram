@@ -2,12 +2,12 @@ import action from '/public/assets/pagination_action.svg';
 
 interface PaginationProps {
     length: number,
-    defaultSize?: number,
+    defaultSize: number,
     onPageChange: (page: number) => void,
     currentPage: number 
 }
 
-export function Pagination({ length, defaultSize = 4, onPageChange, currentPage }: PaginationProps) {
+export function Pagination({ length, defaultSize, onPageChange, currentPage }: PaginationProps) {
     const totalPages = Math.ceil(length / defaultSize); 
     const pageButtons = []; 
 
@@ -27,9 +27,8 @@ export function Pagination({ length, defaultSize = 4, onPageChange, currentPage 
 		);
 	}
 	
-
     return (
-        <div className="flex gap-3 place-self-center">
+        <div className="flex gap-3 place-self-center mt-auto lg:pt-0 pt-6">
             <button 
                 className={`flex items-center justify-center w-10 border-2 rounded-lg p-2 text-[#c4c4c4] 
 					${currentPage === 1 ? 'cursor-not-allowed' : ''}`} 

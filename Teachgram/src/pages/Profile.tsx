@@ -22,8 +22,6 @@ export function Profile() {
 		fetchProfileUser();
 	}, [id, friends, fetchAllUsersInfo]);
 
-	console.log(profileUser)
-
 	return profileUser ? (
 		<PerfilContent user={profileUser} />
 	) : (

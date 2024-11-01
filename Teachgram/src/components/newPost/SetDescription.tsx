@@ -18,23 +18,23 @@ export function SetDescription({ url, onClose }: SetDescriptionProps){
 	if (goAhead) return <SavePost url={url} onClose={onClose} description={description}/>
 
 	return (
-		<div className="flex flex-col space-y-4 bg-white py-[44px] px-[54px] rounded-[34px] min-w-[528px z-50">
-			<button onClick={() => setGoBack(true)}><img src={union} alt="Fechar modal" /></button>
+		<div className="flex flex-col space-y-4 bg-white p-[30px] lg:py-[44px] lg:px-[54px] lg:rounded-[34px] rounded-[22px] lg:min-w-[528px] z-50">
+			<button className='lg:w-auto lg:h-auto w-[9px] h-[9px]' onClick={() => setGoBack(true)}><img src={union} alt="Fechar modal" /></button>
 			<div className="flex justify-between items-center">
-				<h3 className="font-semibold text-2xl">Criar nova publicação</h3>
+				<h3 className="font-semibold lg:text-2xl text-base">Criar nova publicação</h3>
 				<button 
 					onClick={() => setGoAhead(true)}
-					className="text-custom-red underline font-semibold text-base"
+					className="text-custom-red underline font-semibold lg:text-base text-xs"
 				>
 					Compartilhar
 				</button>
 			</div>
-			<img src={url} alt="Nova publicação" className="mx-auto h-auto max-w-[382px]"/>
+			<img src={url} alt="Nova publicação" className="mx-auto h-auto lg:max-w-[382px] max-w-[275px]"/>
 			<input 
 				onChange={(e) => setDescription(e.target.value)}
 				type="text" 
 				placeholder="Escreva uma legenda..." 
-				className="border-none text-xl text-btn-feed-gray focus:outline-none"/>
+				className="border-none lg:text-xl text-base text-btn-feed-gray focus:outline-none"/>
 		</div>
 	);
 }

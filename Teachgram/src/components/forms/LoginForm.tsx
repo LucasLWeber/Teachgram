@@ -37,7 +37,7 @@ export function LoginForm(){
 	}, [data, navigate]);
 
     return(
-        <div className="pl-[45px]">
+        <div className="lg:pl-[45px]">
             <h1 className="font-semibold text-xl mb-[30px]">Faça seu Login</h1>
             <form className="flex flex-col gap-y-6" onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex flex-col gap-y-1.5">

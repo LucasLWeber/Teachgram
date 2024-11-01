@@ -14,15 +14,17 @@ export function DeleteAccount({ onClose }: DeleteAccountProps){
 	};
 
 	return(
-		<div className="relative flex flex-col bg-white space-y-[37px] py-[44px] px-[54px] rounded-[34px] min-w-[528px] shadow-lg">
-			<h3 className="font-semibold text-xl">Excluir conta</h3>
-			<hr className="absolute w-full left-0 top-[50px]"/>
-			<p>Todos os seus dados serão excluídos.</p>
+		<div className="
+			relative flex flex-col bg-white space-y-[37px]  lg:py-[44px] py-[34px] lg:px-[54px] px-12 
+			rounded-[34px] lg:min-w-[528px] shadow-lg">
+			<h3 className="font-semibold text-xl lg:text-start text-center">Excluir conta</h3>
+			<hr className="absolute w-full left-0 lg:top-[50px] top-[40px]"/>
+			<p className="text-custom-black text-base lg:text-start text-center">Todos os seus dados serão excluídos.</p>
 
-			<div className="flex flex-1 items-center justify-center gap-[47px] mt-4">
+			<div className="flex flex-1 items-center justify-center lg:gap-[47px] gap-[20px] lg:mt-4 mt-1">
 				<button 
 					type="button" 
-					className="px-3 py-1 bg-transparent border border-custom-red shadow rounded-lg text-custom-red text-base min-w-[147px]"
+					className="lg:px-3 px-2 py-1 bg-transparent border border-custom-red shadow rounded-lg text-custom-red text-base lg:min-w-[147px]"
 					onClick={onClose}
 				>
 					Cancelar
@@ -31,7 +33,7 @@ export function DeleteAccount({ onClose }: DeleteAccountProps){
 				<button 
 					onClick={handleDeleteAccount}
 					type="button" 
-					className="self-start px-3 py-1 bg-custom-red shadow rounded-lg text-white text-base min-w-[147px]"
+					className="self-start lg:px-3 px-2 py-1 bg-custom-red shadow rounded-lg text-white text-base lg:min-w-[147px]"
 				>
 					Confirmar
 				</button>

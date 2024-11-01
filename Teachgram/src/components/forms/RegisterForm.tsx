@@ -46,7 +46,7 @@ export function RegisterForm(){
     }
 
     return(
-        <div className="pl-[45px] flex flex-col items-start h-screen max-h-screen overflow-y-auto">
+        <div className="lg:pl-[45px] flex flex-col items-start">
             <h1 className="font-semibold text-xl mb-[30px]">{title}</h1>
             <form className="flex flex-col gap-y-6" onSubmit={handleSubmit(onSubmit)}>
                 {!send && (
@@ -130,11 +130,17 @@ export function RegisterForm(){
                             title="Celular"
                         />
                         <ForwardedInput
-                            {...register("celular", {required: "Campo não preenchido"})}
-                            id="celular"
-                            placeholder="Digite seu número de celular"
-                            type="text"
-                        />
+							{...register("celular", {
+								required: "Campo não preenchido",
+								pattern: {
+								value: /^[0-9]*$/,
+								message: "Digite apenas números",
+								},
+							})}
+							id="celular"
+							placeholder="51999999999"
+							type="text"
+						/>
                         {errors.celular && 
                             <p className="text-custom-red text-base text-end font-semibold mt-1">
                                 <span className="inline-block h-2 w-2 mr-2 bg-custom-red rounded-full"></span>

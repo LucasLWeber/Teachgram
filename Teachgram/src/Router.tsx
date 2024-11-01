@@ -11,31 +11,34 @@ import { PostProvider } from "./context/PostsContext";
 import { Settings } from "./pages/Settings";
 import { ProfileSettings } from "./components/settings/ProfileSettings";
 import { AccountSettings } from "./components/settings/AccountSettings";
+import { SettingProvider } from "./context/SettingContext";
 
 export function Router(){
     return(
         <BrowserRouter>
 			<UserProvider>
 				<PostProvider >
-					<Routes>
-						<Route path="/" element={<TokenVerify />} />
+					<SettingProvider>
+						<Routes>
+							<Route path="/" element={<TokenVerify />} />
 
-						<Route element={<PublicRoute />}>
-							<Route path="/login" element={<Login />} />
-							<Route path="/cadastro" element={<Register />} />
-						</Route>
-					
-					
-						<Route element={<PrivateRoute />}>
-							<Route path="/feed" element={<Feed />} />
-							<Route path="/perfil" element={<Profile />} />
-							<Route path="/perfil/:id" element={<Profile />} />
-							<Route path="/configuracoes" element={<Settings />} >
-								<Route path="perfil" element={<ProfileSettings />} />
-								<Route path="conta" element={<AccountSettings />} />
+							<Route element={<PublicRoute />}>
+								<Route path="/login" element={<Login />} />
+								<Route path="/cadastro" element={<Register />} />
 							</Route>
-						</Route>
-					</Routes>
+						
+						
+							<Route element={<PrivateRoute />}>
+								<Route path="/feed" element={<Feed />} />
+								<Route path="/perfil" element={<Profile />} />
+								<Route path="/perfil/:id" element={<Profile />} />
+								<Route path="/configuracoes" element={<Settings />} >
+									<Route path="perfil" element={<ProfileSettings />} />
+									<Route path="conta" element={<AccountSettings />} />
+								</Route>
+							</Route>
+						</Routes>
+					</SettingProvider>
 				</PostProvider>
 			</UserProvider>
         </BrowserRouter>

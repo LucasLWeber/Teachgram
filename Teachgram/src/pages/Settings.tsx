@@ -4,11 +4,12 @@ import { Deco } from "../components/feed/utils/Deco";
 import chevron from '/public/assets/chevron.svg';
 import { useState } from "react";
 import { DeleteAccount } from "../components/settings/DeleteAccount";
+import { useSettingContext } from "../context/SettingContext";
 
 export function Settings(){
 	const navigate = useNavigate();
-	const [initialMenuOpen, setInitialMenuOpen] = useState(true);
 	const [isModalDeleteOpen, setModalDeteteOpen] = useState(false);
+	const { initialMenuOpen, setInitialMenuOpen } = useSettingContext();
 
 	const handleSetInitialMenuOpen = (route: string) => {
 		navigate(`/configuracoes/${route}`)
@@ -17,8 +18,14 @@ export function Settings(){
 
 	return (
 		<main className="w-full lg:pt-8">
-			<button onClick={() => { navigate(-1); setInitialMenuOpen(true) }} className="mb-16 ml-[50px]">
-				<img src={union} alt="Voltar" />
+			<button 
+				onClick={() => { navigate('/feed'); setInitialMenuOpen(true) }} 
+				className="
+					lg:mb-16 lg:ml-[50px]
+					mt-8 ml-7 mb-[107px]
+				"
+			>
+				<img src={union} alt="Voltar" className="lg:h-auto h-3"/>
 			</button>
 			<div className="flex flex-col w-10/12 mx-auto items-start">
 				{initialMenuOpen ?
@@ -45,11 +52,13 @@ export function Settings(){
 				: <Outlet /> }
 			</div>
 			{isModalDeleteOpen && (
-				<div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-					<DeleteAccount onClose={() => setModalDeteteOpen(false)} />
-				</div>
+			<div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+				<DeleteAccount onClose={() => setModalDeteteOpen(false)} />
+			</div>
 			)}
-			<Deco />
+			<div className="hidden lg:block">
+				<Deco />
+			</div>
 		</main>	
 	);
 }
