@@ -13,7 +13,7 @@ export function PerfilContent({ user }: PerfilContentProps){
 	const navigate = useNavigate();
     return(
         <main className="lg:w-10/12 w-full mx-auto lg:mt-16 mt-4 flex lg:justify-between justify-center items-center">
-			<SideBar className="hidden lg:block lg:space-y-8 "/>
+			<SideBar user={user} className="hidden lg:block lg:space-y-8 "/>
 			<div className="w-3/4 flex flex-col gap-4">
 				<div className="lg:hidden flex justify-between items-center">
 					<button onClick={() => navigate(-1)} className="max-w-3"><img src={union} /></button>

@@ -23,8 +23,8 @@ export function UserProvider({ children }: { children: ReactNode }) {
 	const [friends, setFriends] = useState<User[] | null>(null);
 
     const fetchUserInfo = async () => {
+		setLoading(true);
         try {
-            setLoading(true);
             const userCredentials = getUser();
             if (!userCredentials) return;
             
@@ -48,8 +48,8 @@ export function UserProvider({ children }: { children: ReactNode }) {
     };
 
 	const updateUserInfo = async (updatedData: Partial<User>) => {
+		setLoading(true);
         try {
-            setLoading(true);
             const userCredentials = getUser();
             if (!userCredentials || !user) return;
 
@@ -103,8 +103,8 @@ export function UserProvider({ children }: { children: ReactNode }) {
 	}
 
 	const deleteUserAccount = async (navigate: NavigateFunction) => {
+		setLoading(true);
 		try {
-			setLoading(true);
             const userCredentials = getUser();
             if (!userCredentials) return;
 

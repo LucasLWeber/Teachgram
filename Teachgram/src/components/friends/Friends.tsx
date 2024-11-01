@@ -5,7 +5,8 @@ import { User } from '../../utils/interfaces';
 import { Link } from 'react-router-dom';
 import { Pagination } from './Pagination';
 import union from '/assets/union.svg';	
-import loading from '/assets/loading_logo.svg';	
+import loadingLogo from '/assets/loading_logo.svg';	
+import { Loading } from '../../pages/Loading';
 
 interface FriendsProps {
 	onClose: () => void;
@@ -13,7 +14,7 @@ interface FriendsProps {
 
 export function Friends({ onClose }: FriendsProps){
 	const [friends, setFriends] = useState<User[] | null>(null);
-	const { fetchAllUsersInfo } = useUserContext();
+	const { fetchAllUsersInfo, loading } = useUserContext();
 	const [currentPage, setCurrentPage] = useState(1);
 	const [itemsPerPage, setItemsPerPage] = useState(4);
 
@@ -43,6 +44,8 @@ export function Friends({ onClose }: FriendsProps){
     const startIndex = (currentPage - 1) * itemsPerPage;
     const selectedFriends = friends?.slice(startIndex, startIndex + itemsPerPage);
 
+	if (loading) return <div className='z-50 w-full'><Loading /></div>
+
 	return (
 		<div className="relative z-50 flex flex-col bg-white py-[44px] lg:px-[54px] px-[45px] lg:rounded-[34px] lg:max-w-[528px] lg:h-auto h-screen w-full">
 			<button 
@@ -51,7 +54,7 @@ export function Friends({ onClose }: FriendsProps){
 				>
 				<img src={union}/>
 			</button>
-			<img src={loading} className='lg:hidden block h-[39px] w-[39px] place-self-end' />
+			<img src={loadingLogo} className='lg:hidden block h-[39px] w-[39px] place-self-end' />
 			<button onClick={onClose} className="lg:block hidden place-self-end">
 				<img src={close} alt="Fechar modal"/>
 			</button>

@@ -23,7 +23,7 @@ function Logout(){
 				<img src={union} alt="Logout" className="w-6 h-6 mr-4" />
 			</button>
 			{isHovered && (
-				<div className="z-50 absolute left-[-24px] top-[-30px] transform bg-custom-gray text-white text-sm py-1 px-2 rounded shadow-lg">
+				<div className="absolute left-[-24px] top-[-30px] transform bg-custom-gray text-white text-sm py-1 px-2 rounded shadow-lg">
 					Sair
 				</div>
 			)}

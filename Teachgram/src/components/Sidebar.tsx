@@ -7,17 +7,17 @@ import { Button } from "./perfil/utils/Button";
 import { Link } from "react-router-dom";
 import ImageInput from "./newPost/ImageInput";
 import { Friends } from "./friends/Friends";
-import { useUserContext } from "../context/UserContext";
 import { useState } from "react";
+import { User } from "../utils/interfaces";
 
 interface SideBarProps {
+	user: User | null;
 	className?: string;
 }
 
-export default function SideBar({ className }: SideBarProps) {
+export default function SideBar({ user, className }: SideBarProps) {
   const [isModalToCreatePostOpen, setIsModalToCreatePostOpen] = useState(false);
   const [isModalToViewFriends, setIsModalToViewFriends] = useState(false);
-  const { user }  = useUserContext();
 
   return (
     <div className={`flex lg:flex-col flex-row fixed lg:static bottom-0 w-full lg:w-1/4 bg-white shadow-lg lg:shadow-none lg:bg-transparent justify-around lg:justify-start gap-4 lg:gap-8 lg:shadow-none shadow-top ${className}`}>

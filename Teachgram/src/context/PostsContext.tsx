@@ -19,8 +19,8 @@ export const PostProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [error, setError] = useState<string | null>(null);
 
     const fetchPosts = async () => {
+		setLoading(true);
         try {
-            setLoading(true);
             const userCredentials = getUser();
             if (!userCredentials) return;
 
@@ -44,11 +44,11 @@ export const PostProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
 
     const addPost = async (postData: any) => {
+		setLoading(true);
         try {
             const credentials = getUser();
             if (!credentials) return;
 
-            setLoading(true);
             const response = await fetch(`${import.meta.env.VITE_API_URL}/posts/${credentials?.id}`, {
                 headers: {
                     "Content-Type": "application/json",
@@ -69,6 +69,7 @@ export const PostProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
 
 	const deletePost = async (postId: number) => {
+		setLoading(true);
         try {
             const userCredentials = getUser();
             if (!userCredentials) return;
@@ -98,7 +99,9 @@ export const PostProvider: React.FC<{ children: React.ReactNode }> = ({ children
         } catch (e) {
             console.error("Erro ao deletar post");
             setError('Ocorreu um erro durante a requisição');
-        }
+        } finally {
+			setLoading(false);
+		}
     };
 
     useEffect(() => {

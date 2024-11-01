@@ -35,7 +35,7 @@ export function ProfileSettings() {
 		<h3 className="text-2xl font-semibold text-custom-black mb-[51px]">Editar perfil</h3>
 		<img 
 			src={user.profileLink} alt={`Foto de ${user.name}`} 
-			className="max-h-[176px] max-w-[176px] rounded-full mb-[46px]"
+			className="max-h-[176px] max-w-[176px] rounded-full mb-[46px] self-center lg:self-start"
 		/>
 		<form className="flex flex-col lg:w-1/2 w-full gap-[18px] mb-3" onSubmit={handleSubmit(onSubmit)}>
 			<div className="flex flex-col space-y-2">
@@ -45,7 +45,7 @@ export function ProfileSettings() {
 				type="text" 
 				defaultValue={user.profileLink} 
 				{...register("fotoPerfil", { required: "Foto de perfil é obrigatório" })} 
-				className="text-xl text-custom-gray focus:outline-none text-custom-red truncated"
+				className="text-xl text-custom-gray focus:outline-none text-custom-red truncate"
 				/>
 				<hr />
 				{errors.fotoPerfil && 
@@ -99,7 +99,7 @@ export function ProfileSettings() {
 				type="text" 
 				defaultValue={user.description}
 				{...register("bio", { required: "A bio é obrigatória" })} 
-				className="text-xl text-custom-gray focus:outline-none"
+				className="truncate text-xl text-custom-gray focus:outline-none"
 				/>
 				<hr />
 				{errors.bio && 
